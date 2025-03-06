@@ -1,0 +1,66 @@
+start:
+
+  remember maxRounds = 10
+
+  say "Welcome JMC aspirant!"
+  say Image("https://upload.wikimedia.org/wikipedia/en/thumb/a/ac/Jesus_and_Mary_College_logo.svg/1024px-Jesus_and_Mary_College_logo.svg.png")
+  say Wait(1000)
+  say Typing(2000) 
+  say "UG Admissions open for 2021-22"
+  say Typing(1000)
+  say QuickReply("",buttons=[Button("Aspirant") as btn_Y, Button("Current student") as btn_N ,Button("Alumni") as btn_A])
+  hold
+  if (event match btn_Y)goto play
+  else if (event match btn_N )goto current
+  else goto alumni
+
+play:
+  say "Alright then. how can i help you?" goto select
+  select:
+say QuickReply("Are you looking forward to applying this year?", buttons=[Button("UG") as btn_Y, Button("PG") as btn_N])
+  hold
+  if (event match btn_Y)goto admin
+  else goto kill
+  
+  admin:
+say QuickReply("Are you looking forward to applying this year?", buttons=[Button("Yes!") as btn_Y, Button("Next year!") as btn_N, Button("Add-on courses")as btn_Add])
+
+
+
+
+  current:
+  use Button("SmartProf Login", accept=["costs", "cost", "explorer"]) as btnsmp
+	use Button("Time-Table", accept=["forecast", "preview"]) as btnttb
+	use Button("Greivance", accept=["help"]) as btngrv
+  use Button("Document Request", accept=["criteria"]) as btndcr
+	use Button("Faculty", accept=["nothing"]) as btnfct 
+  use Button("End", accept=["kill"])as btnend
+  
+	say Question("What are you looking for?", buttons=[btnsmp, btnttb, btngrv, btndcr, btnfct, btnend])
+	hold
+
+	if (event match btnsmp) say Url("https://www.sggscc.ac.in/smartprof/")
+	else if (event match btnttb) say Url("https://www.sggscc.ac.in/studentcorner/timetable")
+	else if (event match btngrv) say Url("https://www.sggscc.ac.in/studentcorner/studentsupportcell")
+	else if (event match btndcr) say Url("https://www.sggscc.ac.in/studentcorner/documents-required-students-employers")
+  else if (event match btnfct) say Url("https://www.sggscc.ac.in/faculty")
+  else if(event match btnend) goto kill
+	
+  alumni:
+	use Button("Document request", accept=["docrequest"]) as btndoc
+  use Button("Faculy", accept=["criteria"]) as btnfac
+	use Button("Alumni Website", accept=["nothing"]) as btnalum
+  use Button("Nothing Here", accept=["End"])as btnend
+
+	say Question("What are you looking for?", buttons=[btndoc, btnfac, btnalum, btnend])
+	hold
+
+	if (event match btnexp) say Url("https://www.sggscc.ac.in/studentcorner/documents-required-students-employers")
+	else if (event match btnhello) say Url("https://www.sggscc.ac.in/faculty")
+  else if (event match btnbye) say Url("https://alumni.sggscc.ac.in/")
+  else if(event match btnend) goto kill
+	
+
+ kill:
+ say "Alright! We're looking forward to having you next year! "
+ say Url("https://www.sggscc.ac.in/faculty", title="Check out our website")
